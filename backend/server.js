@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import pincodeRoutes from "./routes/pincode.js";
 import FormData from "./models/FormData.js";
 import PinCodeArea from "./models/PinCodeArea.js";
+import CorporateData from "./models/CorporateData.js";
 
 dotenv.config();
 const app = express();
@@ -23,6 +24,8 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/api/pincode", pincodeRoutes);
+
+// FORM DATA ROUTES
 
 // Save or update form data (handles both sender and receiver)
 app.post("/api/form", async (req, res) => {
@@ -549,6 +552,359 @@ app.get("/api/search", async (req, res) => {
   }
 });
 
+// CORPORATE REGISTRATION ROUTES
+
+// Register new corporate
+app.post("/api/corporate/register", async (req, res) => {
+  try {
+    console.log('Received corporate registration data:', req.body);
+    
+    const {
+      companyName,
+      companyAddress,
+      pin,
+      city,
+      state,
+      locality,
+      flatNumber,
+      landmark,
+      gstNumber,
+      birthday,
+      anniversary,
+      contactNumber,
+      addressType,
+      password
+    } = req.body;
+    
+    // Validate required fields
+    const requiredFields = ['companyName', 'companyAddress', 'pin', 'city', 'state', 'locality', 'contactNumber', 'password'];
+    const missingFields = requiredFields.filter(field => !req.body[field] || req.body[field].toString().trim() === '');
+    
+    if (missingFields.length > 0) {
+      return res.status(400).json({ 
+        error: `Missing required fields: ${missingFields.join(', ')}` 
+      });
+    }
+
+    // Check if company with same name and contact already exists
+    const existingCompany = await CorporateData.findOne({
+      $or: [
+        { companyName: companyName.trim() },
+        { contactNumber: contactNumber.replace(/\D/g, '') }
+      ]
+    });
+
+    if (existingCompany) {
+      return res.status(409).json({ 
+        error: 'A company with this name or contact number already exists' 
+      });
+    }
+
+    // Check GST number if provided
+    if (gstNumber && gstNumber.trim()) {
+      const existingGST = await CorporateData.findOne({ gstNumber: gstNumber.trim().toUpperCase() });
+      if (existingGST) {
+        return res.status(409).json({ 
+          error: 'A company with this GST number already exists' 
+        });
+      }
+    }
+
+    // Generate unique corporate ID
+    const corporateId = await CorporateData.generateCorporateId(companyName);
+    
+    // Create new corporate registration
+    const corporateData = new CorporateData({
+      corporateId,
+      companyName: companyName.trim(),
+      companyAddress: companyAddress.trim(),
+      pin: pin.trim(),
+      city: city.trim(),
+      state: state.trim(),
+      locality: locality.trim(),
+      flatNumber: flatNumber?.trim() || '',
+      landmark: landmark?.trim() || '',
+      gstNumber: gstNumber?.trim().toUpperCase() || '',
+      birthday: birthday || null,
+      anniversary: anniversary || null,
+      contactNumber: contactNumber.trim(),
+      addressType: addressType || 'corporate',
+      password: password
+    });
+
+    await corporateData.save();
+    
+    console.log('Corporate registration successful:', corporateId);
+    
+    res.json({ 
+      success: true, 
+      message: 'Corporate registration successful!',
+      corporateId: corporateId,
+      data: {
+        corporateId: corporateData.corporateId,
+        companyName: corporateData.companyName,
+        city: corporateData.city,
+        state: corporateData.state,
+        registrationDate: corporateData.registrationDate
+      }
+    });
+    
+  } catch (err) {
+    console.error('Error in corporate registration:', err);
+    
+    if (err.name === 'ValidationError') {
+      const validationErrors = Object.values(err.errors).map(e => e.message);
+      res.status(400).json({ 
+        error: 'Validation failed',
+        details: validationErrors
+      });
+    } else if (err.code === 11000) {
+      res.status(409).json({ 
+        error: 'Duplicate entry detected',
+        details: 'A company with this information already exists'
+      });
+    } else {
+      res.status(500).json({ 
+        error: err.message || 'Internal server error'
+      });
+    }
+  }
+});
+
+// Get corporate by ID
+app.get("/api/corporate/:corporateId", async (req, res) => {
+  try {
+    const corporate = await CorporateData.findByCorporateId(req.params.corporateId);
+    
+    if (!corporate) {
+      return res.status(404).json({ 
+        error: 'Corporate registration not found' 
+      });
+    }
+    
+    res.json({ 
+      success: true, 
+      data: corporate
+    });
+    
+  } catch (err) {
+    console.error('Error fetching corporate data:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get all corporate registrations with filtering and pagination
+app.get("/api/corporate", async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    
+    const filters = {};
+    
+    // Add filters based on query parameters
+    if (req.query.active === 'true') {
+      filters.isActive = true;
+    } else if (req.query.active === 'false') {
+      filters.isActive = false;
+    }
+    
+    if (req.query.state) {
+      filters.state = new RegExp(req.query.state, 'i');
+    }
+    
+    if (req.query.city) {
+      filters.city = new RegExp(req.query.city, 'i');
+    }
+    
+    if (req.query.addressType) {
+      filters.addressType = req.query.addressType;
+    }
+
+    const corporates = await CorporateData.find(filters)
+      .sort({ registrationDate: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    const totalCount = await CorporateData.countDocuments(filters);
+    
+    res.json({ 
+      success: true, 
+      data: corporates, 
+      count: corporates.length,
+      totalCount,
+      currentPage: page,
+      totalPages: Math.ceil(totalCount / limit),
+      hasNext: page * limit < totalCount,
+      hasPrev: page > 1
+    });
+    
+  } catch (err) {
+    console.error('Error fetching corporate data:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Search corporate registrations
+app.get("/api/corporate/search/:query", async (req, res) => {
+  try {
+    const { query } = req.params;
+    
+    if (!query || query.trim().length < 2) {
+      return res.status(400).json({ 
+        error: 'Search query must be at least 2 characters long' 
+      });
+    }
+    
+    const results = await CorporateData.searchCompanies(query.trim());
+    
+    res.json({ 
+      success: true, 
+      data: results, 
+      count: results.length,
+      searchQuery: query.trim()
+    });
+    
+  } catch (err) {
+    console.error('Error in corporate search:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Update corporate data
+app.put("/api/corporate/:corporateId", async (req, res) => {
+  try {
+    const updatedCorporate = await CorporateData.findOneAndUpdate(
+      { corporateId: req.params.corporateId },
+      { $set: req.body },
+      { 
+        new: true, 
+        runValidators: true 
+      }
+    );
+    
+    if (!updatedCorporate) {
+      return res.status(404).json({ 
+        error: 'Corporate registration not found' 
+      });
+    }
+    
+    console.log('Corporate data updated successfully:', updatedCorporate.corporateId);
+    res.json({ 
+      success: true, 
+      data: updatedCorporate,
+      message: 'Corporate data updated successfully!'
+    });
+    
+  } catch (err) {
+    console.error('Error updating corporate data:', err);
+    if (err.name === 'ValidationError') {
+      const validationErrors = Object.values(err.errors).map(e => e.message);
+      res.status(400).json({ 
+        error: 'Validation failed',
+        details: validationErrors
+      });
+    } else {
+      res.status(500).json({ error: err.message });
+    }
+  }
+});
+
+// Delete corporate registration
+app.delete("/api/corporate/:corporateId", async (req, res) => {
+  try {
+    const deletedCorporate = await CorporateData.findOneAndDelete({ 
+      corporateId: req.params.corporateId 
+    });
+    
+    if (!deletedCorporate) {
+      return res.status(404).json({ 
+        error: 'Corporate registration not found' 
+      });
+    }
+    
+    console.log('Corporate registration deleted successfully:', deletedCorporate.corporateId);
+    res.json({ 
+      success: true, 
+      message: 'Corporate registration deleted successfully!',
+      deletedData: deletedCorporate
+    });
+    
+  } catch (err) {
+    console.error('Error deleting corporate registration:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get corporate statistics
+app.get("/api/stats/corporate", async (req, res) => {
+  try {
+    const totalCorporates = await CorporateData.countDocuments();
+    const activeCorporates = await CorporateData.countDocuments({ isActive: true });
+    const inactiveCorporates = await CorporateData.countDocuments({ isActive: false });
+    
+    // Get registrations by state
+    const corporatesByState = await CorporateData.aggregate([
+      { $match: { state: { $exists: true, $ne: '' } } },
+      { $group: { _id: '$state', count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 10 }
+    ]);
+    
+    // Get registrations by address type
+    const corporatesByType = await CorporateData.aggregate([
+      { $group: { _id: '$addressType', count: { $sum: 1 } } },
+      { $sort: { count: -1 } }
+    ]);
+    
+    // Get recent registrations
+    const recentRegistrations = await CorporateData.find()
+      .sort({ registrationDate: -1 })
+      .limit(5)
+      .select('corporateId companyName city state registrationDate addressType isActive')
+      .lean();
+    
+    // Monthly registration stats for current year
+    const currentYear = new Date().getFullYear();
+    const monthlyStats = await CorporateData.aggregate([
+      {
+        $match: {
+          registrationDate: {
+            $gte: new Date(`${currentYear}-01-01`),
+            $lte: new Date(`${currentYear}-12-31`)
+          }
+        }
+      },
+      {
+        $group: {
+          _id: { $month: '$registrationDate' },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { '_id': 1 } }
+    ]);
+    
+    res.json({ 
+      success: true, 
+      stats: {
+        totalCorporates,
+        activeCorporates,
+        inactiveCorporates,
+        corporatesByState,
+        corporatesByType,
+        recentRegistrations,
+        monthlyStats,
+        currentYear
+      }
+    });
+    
+  } catch (err) {
+    console.error('Error fetching corporate statistics:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Health check endpoint
 app.get("/api/health", async (req, res) => {
   try {
@@ -560,19 +916,22 @@ app.get("/api/health", async (req, res) => {
     const formCount = await FormData.countDocuments();
     const completedFormCount = await FormData.countDocuments({ formCompleted: true });
     const pincodeCount = await PinCodeArea.countDocuments();
+    const corporateCount = await CorporateData.countDocuments();
     
     res.json({ 
       status: "Server is running",
       database: dbStatus,
+      environment: "MongoDB Atlas Cloud",
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
       memory: process.memoryUsage(),
       collections: {
         forms: formCount,
         completedForms: completedFormCount,
-        pincodeAreas: pincodeCount
+        pincodeAreas: pincodeCount,
+        corporateRegistrations: corporateCount
       },
-      version: "3.0.0"
+      version: "3.2.0"
     });
   } catch (err) {
     res.status(500).json({
@@ -634,9 +993,12 @@ app.get("/api/export", async (req, res) => {
 // Start server function
 const startServer = async () => {
   try {
-    // Connect to MongoDB
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("✅ MongoDB Connected");
+    // Connect to MongoDB Atlas
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("✅ MongoDB Atlas Connected Successfully");
     
     // Verify pincode collection exists and has data
     const pincodeCount = await PinCodeArea.countDocuments();
@@ -651,19 +1013,27 @@ const startServer = async () => {
     const completedFormCount = await FormData.countDocuments({ formCompleted: true });
     console.log(`📋 FormData collection has ${formCount} records (${completedFormCount} completed)`);
     
+    // Check corporate collection
+    const corporateCount = await CorporateData.countDocuments();
+    console.log(`🏢 CorporateData collection has ${corporateCount} records`);
+    
     // Start the server
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
-      console.log(`🔍 Server ready for MongoDB operations`);
-      console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
+      console.log(`☁️ Connected to MongoDB Atlas (Cloud Database)`);
+      console.log(`🔗 Server ready for MongoDB operations`);
+      console.log(`📗 Health check: http://localhost:${PORT}/api/health`);
       console.log(`📈 Form stats: http://localhost:${PORT}/api/stats/forms`);
       console.log(`📊 Pincode stats: http://localhost:${PORT}/api/stats/pincode`);
+      console.log(`🏢 Corporate stats: http://localhost:${PORT}/api/stats/corporate`);
       console.log(`🔎 Search API: http://localhost:${PORT}/api/search?q=<query>`);
+      console.log(`🛒 Corporate API: http://localhost:${PORT}/api/corporate`);
     });
     
   } catch (err) {
-    console.error("❌ Server startup error:", err);
+    console.error("❌ MongoDB Atlas connection error:", err);
+    console.error("Please check your MONGO_URI in .env file");
     process.exit(1);
   }
 };
@@ -676,7 +1046,7 @@ function gracefulShutdown(signal) {
   console.log(`\n${signal} received, shutting down gracefully...`);
   
   mongoose.connection.close(() => {
-    console.log('MongoDB connection closed');
+    console.log('MongoDB Atlas connection closed');
     process.exit(0);
   });
 }
