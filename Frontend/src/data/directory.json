@@ -1,0 +1,37 @@
+{
+  "directory": [
+    {
+      "id": "SF-001",
+      "type": "Super-Franchisee",
+      "name": "Mumbai Central Hub",
+      "contact": "Rajesh Kumar",
+      "phone": "+91 9876543210",
+      "email": "mumbai@daakbox.com",
+      "address": "123 Business District, Mumbai 400001",
+      "pincode": "400001",
+      "state": "Maharashtra"
+    },
+    {
+      "id": "F-001",
+      "type": "Franchisee",
+      "name": "Andheri West Branch",
+      "contact": "Priya Sharma",
+      "phone": "+91 8765432109",
+      "email": "andheri@daakbox.com",
+      "address": "456 Link Road, Andheri West, Mumbai 400058",
+      "pincode": "400058",
+      "state": "Maharashtra"
+    },
+    {
+      "id": "A-001",
+      "type": "Agent",
+      "name": "Bandra Collection Point",
+      "contact": "Amit Patel",
+      "phone": "+91 7654321098",
+      "email": "bandra@daakbox.com",
+      "address": "789 SV Road, Bandra West, Mumbai 400050",
+      "pincode": "400050",
+      "state": "Maharashtra"
+    }
+  ]
+}

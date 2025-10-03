@@ -1,0 +1,67 @@
+{
+  "logo": {
+    "text": "OCL Services",
+    "tagline": ""
+  },
+  "navigation": [
+    {
+      "label": "Account",
+      "type": "dropdown",
+      "items": [
+        { "label": "Schedule Pickup", "href": "/schedule-pickup" },
+        { "label": "View Bills Online", "href": "/bills" },
+        { "label": "Apply for Credit Account", "href": "/credit-account" },
+        { "label": "My Shipments", "href": "/my-shipments" }
+      ]
+    },
+    {
+      "label": "Services",
+      "type": "dropdown",
+      "items": [
+        { "label": "Courier", "href": "/services/courier" },
+        { "label": "Logistics", "href": "/services/logistics" },
+        { "label": "Shipping Rates", "href": "/rates" },
+        { "label": "Volumetric Weight Calculator", "href": "/tools/volumetric" },
+        { "label": "Pin Code Serviceability", "href": "/serviceability" },
+        { "label": "Location Finder", "href": "/location" }
+      ]
+    },
+    {
+      "label": "Resources",
+      "type": "dropdown",
+      "items": [
+        { "label": "Fuel Surcharge", "href": "/fuel" },
+        { "label": "Restricted Items", "href": "/restricted" }
+      ]
+    },
+    {
+      "label": "Support",
+      "type": "dropdown",
+      "items": [
+        { "label": "Track & Trace", "href": "/track" },
+        { "label": "Tracking by WhatsApp", "href": "/track/whatsapp" },
+        { "label": "Contact OCL", "href": "/support/contact" },
+        { "label": "Write to Us", "href": "/support/write" }
+      ]
+    },
+    {
+      "label": "Company",
+      "type": "dropdown",
+      "items": [
+        { "label": "Company Information", "href": "/about" },
+        { "label": "Our Journey", "href": "/journey" },
+        { "label": "Vision & Mission", "href": "/vision" },
+        { "label": "GST", "href": "/gst" },
+        { "label": "HSN/SAC Numbers", "href": "/hsn" },
+        { "label": "Our Clients", "href": "/clients" },
+        { "label": "OCL News", "href": "/news" },
+        { "label": "Corporate Directory", "href": "/directory" }
+      ]
+    },
+    {
+      "label": "Ship Now",
+      "href": "/ship-now",
+      "type": "cta"
+    }
+  ]
+}

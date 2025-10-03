@@ -1,0 +1,31 @@
+{
+  "banners": [
+    {
+      "id": 1,
+      "title": "Express Delivery Now Available",
+      "subtitle": "Same-day delivery in major cities",
+      "image": "/api/placeholder/800/300",
+      "cta": "Book Now",
+      "link": "/services/express",
+      "active": true
+    },
+    {
+      "id": 2,
+      "title": "Special Corporate Rates",
+      "subtitle": "Up to 30% discount for bulk shipments",
+      "image": "/api/placeholder/800/300",
+      "cta": "Get Quote",
+      "link": "/corporate",
+      "active": true
+    },
+    {
+      "id": 3,
+      "title": "Track Your Package",
+      "subtitle": "Real-time tracking with WhatsApp updates",
+      "image": "/api/placeholder/800/300",
+      "cta": "Track Now",
+      "link": "/track",
+      "active": true
+    }
+  ]
+}

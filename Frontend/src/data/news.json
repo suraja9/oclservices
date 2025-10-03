@@ -1,0 +1,35 @@
+{
+  "articles": [
+    {
+      "id": 1,
+      "title": "DaakBox Expands to 50 New Cities",
+      "excerpt": "We're excited to announce our expansion into 50 new cities across India, bringing our reliable delivery services closer to you.",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "category": "Expansion",
+      "date": "2024-03-20",
+      "image": "/api/placeholder/400/250",
+      "author": "DaakBox Team"
+    },
+    {
+      "id": 2,
+      "title": "New Technology Integration",
+      "excerpt": "Advanced AI-powered route optimization reduces delivery times by 25% across all our services.",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "category": "Technology",
+      "date": "2024-03-15",
+      "image": "/api/placeholder/400/250",
+      "author": "Tech Team"
+    },
+    {
+      "id": 3,
+      "title": "Sustainability Initiative Launch",
+      "excerpt": "DaakBox commits to carbon-neutral delivery with our new electric vehicle fleet and green packaging solutions.",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "category": "Sustainability",
+      "date": "2024-03-10",
+      "image": "/api/placeholder/400/250",
+      "author": "Sustainability Team"
+    }
+  ],
+  "categories": ["All", "Expansion", "Technology", "Sustainability", "Announcements", "Awards"]
+}

@@ -1,0 +1,116 @@
+{
+  "service_codes": [
+    {
+      "sac_code": "996511",
+      "description": "Goods Transportation by Road",
+      "gst_rate": "5%",
+      "category": "Transportation",
+      "applicable_services": [
+        "Door-to-door delivery",
+        "Inter-city transportation",
+        "Last-mile delivery",
+        "Standard courier services"
+      ]
+    },
+    {
+      "sac_code": "996512",
+      "description": "Goods Transportation by Rail",
+      "gst_rate": "5%",
+      "category": "Transportation",
+      "applicable_services": [
+        "Rail cargo services",
+        "Container transportation",
+        "Bulk goods movement"
+      ]
+    },
+    {
+      "sac_code": "996513",
+      "description": "Goods Transportation by Air",
+      "gst_rate": "5%",
+      "category": "Transportation",
+      "applicable_services": [
+        "Air cargo services",
+        "Express air delivery",
+        "International air freight"
+      ]
+    },
+    {
+      "sac_code": "996519",
+      "description": "Express Delivery Services",
+      "gst_rate": "18%",
+      "category": "Express Services",
+      "applicable_services": [
+        "Same-day delivery",
+        "Time-definite delivery",
+        "Express courier services",
+        "Priority handling"
+      ]
+    },
+    {
+      "sac_code": "996799",
+      "description": "Warehousing and Storage Services",
+      "gst_rate": "18%",
+      "category": "Storage",
+      "applicable_services": [
+        "Inventory management",
+        "Cold storage services",
+        "Distribution center operations",
+        "Order fulfillment"
+      ]
+    },
+    {
+      "sac_code": "997212",
+      "description": "Courier Services",
+      "gst_rate": "18%",
+      "category": "Courier",
+      "applicable_services": [
+        "Document delivery",
+        "Small package delivery",
+        "International courier",
+        "Registered post equivalent"
+      ]
+    },
+    {
+      "sac_code": "997311",
+      "description": "Cargo Handling Services",
+      "gst_rate": "18%",
+      "category": "Handling",
+      "applicable_services": [
+        "Loading and unloading",
+        "Cargo consolidation",
+        "Container handling",
+        "Special handling services"
+      ]
+    },
+    {
+      "sac_code": "997321",
+      "description": "Freight Forwarding Services",
+      "gst_rate": "18%",
+      "category": "Forwarding",
+      "applicable_services": [
+        "Multi-modal transportation",
+        "Customs clearance assistance",
+        "Documentation services",
+        "Supply chain management"
+      ]
+    }
+  ],
+  "exemptions": [
+    {
+      "description": "Transportation of goods where consideration is less than ₹1,500",
+      "condition": "Applicable for local deliveries under ₹1,500",
+      "gst_rate": "Exempt"
+    },
+    {
+      "description": "Transportation of passengers",
+      "condition": "Not applicable to goods transportation",
+      "gst_rate": "Exempt"
+    }
+  ],
+  "notes": [
+    "GST rates are subject to change as per government notifications",
+    "Input tax credit available on qualifying purchases",
+    "Reverse charge mechanism applicable in certain cases",
+    "Export services are zero-rated with input tax credit benefits"
+  ]
+}

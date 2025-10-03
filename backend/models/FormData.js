@@ -128,6 +128,86 @@ const formSchema = new mongoose.Schema({
   formCompleted: {
     type: Boolean,
     default: false
+  },
+
+  // New nested structure for full booking flow
+  originData: {
+    type: new mongoose.Schema({
+      name: { type: String, trim: true },
+      companyName: { type: String, trim: true },
+      email: { type: String, trim: true, lowercase: true },
+      mobileNumber: { type: String, trim: true },
+      alternateNumbers: [{ type: String, trim: true }],
+      gstNumber: { type: String, trim: true },
+      addressType: { type: String, trim: true },
+      locality: { type: String, trim: true },
+      flatBuilding: { type: String, trim: true },
+      landmark: { type: String, trim: true },
+      pincode: { type: String, trim: true },
+      area: { type: String, trim: true },
+      city: { type: String, trim: true },
+      district: { type: String, trim: true },
+      state: { type: String, trim: true }
+    }, { _id: false }),
+    default: undefined
+  },
+  destinationData: {
+    type: new mongoose.Schema({
+      name: { type: String, trim: true },
+      companyName: { type: String, trim: true },
+      email: { type: String, trim: true, lowercase: true },
+      mobileNumber: { type: String, trim: true },
+      alternateNumbers: [{ type: String, trim: true }],
+      gstNumber: { type: String, trim: true },
+      addressType: { type: String, trim: true },
+      locality: { type: String, trim: true },
+      flatBuilding: { type: String, trim: true },
+      landmark: { type: String, trim: true },
+      pincode: { type: String, trim: true },
+      area: { type: String, trim: true },
+      city: { type: String, trim: true },
+      district: { type: String, trim: true },
+      state: { type: String, trim: true }
+    }, { _id: false }),
+    default: undefined
+  },
+  shipmentData: {
+    type: new mongoose.Schema({
+      natureOfConsignment: { type: String, trim: true },
+      services: { type: String, trim: true },
+      mode: { type: String, trim: true },
+      insurance: { type: String, trim: true },
+      riskCoverage: { type: String, trim: true },
+      dimensions: [{
+        length: { type: Number },
+        breadth: { type: Number },
+        height: { type: Number },
+        unit: { type: String, trim: true }
+      }],
+      actualWeight: { type: Number },
+      volumetricWeight: { type: Number },
+      chargeableWeight: { type: Number }
+    }, { _id: false }),
+    default: undefined
+  },
+  uploadData: {
+    type: new mongoose.Schema({
+      totalPackages: { type: Number },
+      packageImages: [{ type: String }],
+      contentDescription: { type: String, trim: true },
+      invoiceNumber: { type: String, trim: true },
+      invoiceValue: { type: Number },
+      invoiceImages: [{ type: String }],
+      eWaybillNumber: { type: String, trim: true },
+      acceptTerms: { type: Boolean }
+    }, { _id: false }),
+    default: undefined
+  },
+  paymentData: {
+    type: new mongoose.Schema({
+      mode: { type: String, trim: true }
+    }, { _id: false }),
+    default: undefined
   }
 }, {
   timestamps: true,
@@ -182,6 +262,37 @@ formSchema.set('toJSON', {
   transform: function(doc, ret) {
     delete ret._id;
     delete ret.__v;
+    // Backward compatibility: synthesize nested blocks if missing
+    if (!ret.originData && ret.senderEmail) {
+      ret.originData = {
+        name: ret.senderName,
+        email: ret.senderEmail,
+        mobileNumber: ret.senderPhone,
+        pincode: ret.senderPincode,
+        state: ret.senderState,
+        city: ret.senderCity,
+        district: ret.senderDistrict,
+        area: ret.senderArea,
+        flatBuilding: ret.senderAddressLine1,
+        landmark: ret.senderLandmark,
+        locality: ret.senderAddressLine2
+      };
+    }
+    if (!ret.destinationData && ret.receiverEmail) {
+      ret.destinationData = {
+        name: ret.receiverName,
+        email: ret.receiverEmail,
+        mobileNumber: ret.receiverPhone,
+        pincode: ret.receiverPincode,
+        state: ret.receiverState,
+        city: ret.receiverCity,
+        district: ret.receiverDistrict,
+        area: ret.receiverArea,
+        flatBuilding: ret.receiverAddressLine1,
+        landmark: ret.receiverLandmark,
+        locality: ret.receiverAddressLine2
+      };
+    }
     return ret;
   }
 });
@@ -246,12 +357,18 @@ formSchema.pre('save', function(next) {
   this.senderCompleted = !!(this.senderName && this.senderEmail && this.senderPhone && 
     this.senderPincode && this.senderState && this.senderCity && 
     this.senderDistrict && this.senderArea && this.senderAddressLine1);
-  
+
   this.receiverCompleted = !!(this.receiverName && this.receiverEmail && this.receiverPhone && 
     this.receiverPincode && this.receiverState && this.receiverCity && 
     this.receiverDistrict && this.receiverArea && this.receiverAddressLine1);
-  
-  this.formCompleted = this.senderCompleted && this.receiverCompleted;
+
+  // If full booking data present, consider completed as well
+  const hasFull = !!(this.originData && this.destinationData && this.shipmentData && this.uploadData && this.paymentData);
+  if (hasFull) {
+    this.formCompleted = true;
+  } else {
+    this.formCompleted = this.senderCompleted && this.receiverCompleted;
+  }
   
   next();
 });

@@ -1,0 +1,82 @@
+{
+  "categories": [
+    {
+      "id": "explosives",
+      "name": "Explosives & Hazardous",
+      "icon": "AlertTriangle",
+      "items": [
+        "Fireworks and firecrackers",
+        "Ammunition and weapons",
+        "Gas cylinders (except for medical use)",
+        "Lithium batteries (damaged/recalled)",
+        "Flammable liquids",
+        "Chemical substances"
+      ]
+    },
+    {
+      "id": "liquids",
+      "name": "Liquids & Gels",
+      "icon": "Droplets",
+      "items": [
+        "Perfumes and cosmetics (over 100ml)",
+        "Paints and varnishes",
+        "Cleaning chemicals",
+        "Motor oil and lubricants",
+        "Alcohol and beverages",
+        "Homemade food items with liquid content"
+      ]
+    },
+    {
+      "id": "electronics",
+      "name": "Electronics (Restricted)",
+      "icon": "Smartphone",
+      "items": [
+        "Mobile phones without proper documentation",
+        "Laptops and computers (international)",
+        "Power banks over 20,000mAh",
+        "Used electronic items",
+        "Drone and RC equipment",
+        "Surveillance equipment"
+      ]
+    },
+    {
+      "id": "perishables",
+      "name": "Perishables & Food",
+      "icon": "Apple",
+      "items": [
+        "Fresh fruits and vegetables",
+        "Dairy products without refrigeration",
+        "Meat and seafood",
+        "Plants and seeds",
+        "Homemade food items",
+        "Items requiring temperature control"
+      ]
+    },
+    {
+      "id": "valuables",
+      "name": "High-Value Items",
+      "icon": "Gem",
+      "items": [
+        "Jewelry and precious stones",
+        "Cash and negotiable instruments",
+        "Important documents (originals)",
+        "Antiques and collectibles",
+        "Gold and silver items",
+        "Investment commodities"
+      ]
+    },
+    {
+      "id": "others",
+      "name": "Other Restricted",
+      "icon": "Ban",
+      "items": [
+        "Live animals and pets",
+        "Human remains and ashes",
+        "Narcotics and controlled substances",
+        "Counterfeit goods",
+        "Obscene materials",
+        "Items violating intellectual property"
+      ]
+    }
+  ]
+}

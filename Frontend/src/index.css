@@ -1,13 +1,284 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* OCL SERVICES Design System - Minimalist Flat Design with Two-Section Navigation */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 0%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 198 68% 18%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 0%;
+    --accent: 198 60% 85%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 198 68% 18%;
+    --input: 0 0% 90%;
+    --ring: 198 68% 18%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    
+    /* Custom Brand Colors - unified to primary (teal) */
+    --brand-red: var(--primary);
+    --brand-red-dark: 198 75% 15%;
+    --brand-yellow: var(--primary);
+    --brand-yellow-dark: 198 75% 15%;
+    --brand-black: 0 0% 0%;
+    --brand-brown-dark: 25 75% 15%;
+    
+    /* Maroon Colors for Navigation */
+    --maroon-800: 0 50% 25%;
+    --maroon-900: 0 60% 20%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--brand-yellow-dark)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--brand-yellow-dark)));
+    --gradient-card: linear-gradient(135deg, hsl(var(--card)), hsl(var(--accent)));
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.3);
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.4);
+    --shadow-hover: 0 8px 25px -5px hsl(var(--primary) / 0.3);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s ease-out;
+    
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* OCL Custom Classes */
+@layer components {
+  .ocl-card {
+    @apply bg-gradient-to-br from-card to-accent border-2 border-primary rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-hover;
+  }
+
+  .ocl-btn-primary {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-brand-brown-dark hover:text-white hover:shadow-hover active:scale-95;
+  }
+
+  .ocl-btn-outline {
+    @apply border-2 border-primary text-primary px-6 py-3 rounded-lg font-semibold bg-transparent transition-all duration-300 hover:bg-brand-brown-dark hover:text-white hover:shadow-hover active:scale-95;
+  }
+
+  .ocl-btn-menu {
+    @apply relative px-4 py-2 rounded-md font-medium transition-all duration-300 hover:bg-primary/10 hover:text-primary;
+  }
+
+  .ocl-btn-menu::before {
+    @apply content-[''] absolute inset-0 border-2 border-transparent rounded-md transition-all duration-300;
+  }
+
+  .ocl-btn-menu:hover::before {
+    @apply border-primary shadow-md;
+  }
+
+  .ocl-section {
+    @apply py-16 px-4 bg-background;
+  }
+
+  .ocl-container {
+    @apply container mx-auto max-w-6xl;
+  }
+
+  .ocl-heading {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6;
+  }
+
+  .ocl-subheading {
+    @apply text-xl md:text-2xl font-semibold text-muted-foreground mb-4;
+  }
+
+  .ocl-text {
+    @apply text-base md:text-lg text-muted-foreground leading-relaxed;
+  }
+
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .shadow-hover {
+    box-shadow: var(--shadow-hover);
+  }
+}
+
+/* Animations */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-slide-in-left {
+    animation: slideInLeft 0.5s ease-out forwards;
+  }
+  
+  .animate-slide-in-right {
+    animation: slideInRight 0.5s ease-out forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Navbar Flat Design Utilities */
+@layer components {
+  .navbar-flat {
+    box-shadow: none !important;
+    background: white;
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  
+  .navbar-maroon-section {
+    background-color: #800000;
+  }
+  
+  .navbar-divider {
+    width: 1px;
+    background-color: hsl(var(--border));
+  }
+  
+  .navbar-menu-item {
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+  }
+  
+  .navbar-menu-item:hover {
+    color: #800000;
+  }
+  
+  .navbar-cta-button {
+    background: white;
+    color: #800000;
+    border: 2px solid #800000;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+  
+  .navbar-cta-button:hover {
+    background: #800000;
+    color: white;
+  }
 }

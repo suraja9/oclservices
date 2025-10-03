@@ -1,0 +1,57 @@
+[
+  {
+    "id": "DL001",
+    "name": "New Delhi Hub",
+    "address": "Plot No. 45, Sector 18, Gurgaon, Haryana 122015",
+    "phone": "+91-11-4567-8901",
+    "email": "delhi@oclservices.com",
+    "coordinates": [28.6139, 77.2090],
+    "services": ["Standard", "Express", "International"],
+    "operatingHours": "Mon-Sat: 9:00 AM - 8:00 PM",
+    "isMainHub": true
+  },
+  {
+    "id": "MH001", 
+    "name": "Mumbai Central",
+    "address": "Unit 12, Andheri Industrial Estate, Mumbai, Maharashtra 400053",
+    "phone": "+91-22-2567-8901",
+    "email": "mumbai@oclservices.com",
+    "coordinates": [19.0760, 72.8777],
+    "services": ["Standard", "Express", "International", "ODA"],
+    "operatingHours": "Mon-Sat: 9:00 AM - 8:00 PM",
+    "isMainHub": true
+  },
+  {
+    "id": "KA001",
+    "name": "Bangalore Tech Park",
+    "address": "Electronic City Phase 1, Bangalore, Karnataka 560100",
+    "phone": "+91-80-4567-8901", 
+    "email": "bangalore@oclservices.com",
+    "coordinates": [12.9716, 77.5946],
+    "services": ["Standard", "Express"],
+    "operatingHours": "Mon-Sat: 9:00 AM - 8:00 PM",
+    "isMainHub": false
+  },
+  {
+    "id": "TN001",
+    "name": "Chennai Port",
+    "address": "OMR Road, Thoraipakkam, Chennai, Tamil Nadu 600097",
+    "phone": "+91-44-4567-8901",
+    "email": "chennai@oclservices.com", 
+    "coordinates": [13.0827, 80.2707],
+    "services": ["Standard", "Express", "International"],
+    "operatingHours": "Mon-Sat: 9:00 AM - 7:00 PM",
+    "isMainHub": false
+  },
+  {
+    "id": "WB001",
+    "name": "Kolkata Regional",
+    "address": "Salt Lake Sector V, Kolkata, West Bengal 700091",
+    "phone": "+91-33-4567-8901",
+    "email": "kolkata@oclservices.com",
+    "coordinates": [22.5726, 88.3639],
+    "services": ["Standard", "Express"],
+    "operatingHours": "Mon-Sat: 9:00 AM - 7:00 PM", 
+    "isMainHub": false
+  }
+]

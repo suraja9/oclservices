@@ -1,0 +1,78 @@
+{
+  "industries": [
+    "E-commerce",
+    "Healthcare",
+    "Automotive",
+    "Electronics",
+    "Fashion",
+    "FMCG",
+    "Pharmaceuticals",
+    "Textiles"
+  ],
+  "clients": [
+    {
+      "name": "ShopEase",
+      "logo": "/api/placeholder/200/100",
+      "industry": "E-commerce",
+      "testimonial": "DaakBox has been our reliable logistics partner, ensuring 99.5% on-time delivery for our customers.",
+      "partnership_since": "2020",
+      "volume": "10,000+ monthly shipments"
+    },
+    {
+      "name": "MediCare Plus",
+      "logo": "/api/placeholder/200/100",
+      "industry": "Healthcare",
+      "testimonial": "Their temperature-controlled logistics have been crucial for our pharmaceutical deliveries.",
+      "partnership_since": "2021",
+      "volume": "5,000+ monthly shipments"
+    },
+    {
+      "name": "AutoParts Pro",
+      "logo": "/api/placeholder/200/100",
+      "industry": "Automotive",
+      "testimonial": "Excellent service for our heavy automotive parts with specialized handling requirements.",
+      "partnership_since": "2019",
+      "volume": "3,000+ monthly shipments"
+    },
+    {
+      "name": "TechGadgets",
+      "logo": "/api/placeholder/200/100",
+      "industry": "Electronics",
+      "testimonial": "Secure and reliable delivery of high-value electronics with insurance coverage.",
+      "partnership_since": "2022",
+      "volume": "8,000+ monthly shipments"
+    },
+    {
+      "name": "Fashion Forward",
+      "logo": "/api/placeholder/200/100",
+      "industry": "Fashion",
+      "testimonial": "Perfect for our fashion deliveries with careful handling and quick turnaround times.",
+      "partnership_since": "2021",
+      "volume": "15,000+ monthly shipments"
+    },
+    {
+      "name": "DailyEssentials",
+      "logo": "/api/placeholder/200/100",
+      "industry": "FMCG",
+      "testimonial": "Cost-effective bulk logistics solution that has helped us expand nationwide.",
+      "partnership_since": "2020",
+      "volume": "25,000+ monthly shipments"
+    },
+    {
+      "name": "PharmaSafe",
+      "logo": "/api/placeholder/200/100",
+      "industry": "Pharmaceuticals",
+      "testimonial": "Compliant cold-chain logistics ensuring medication integrity throughout delivery.",
+      "partnership_since": "2022",
+      "volume": "4,000+ monthly shipments"
+    },
+    {
+      "name": "Textile Mills Co.",
+      "logo": "/api/placeholder/200/100",
+      "industry": "Textiles",
+      "testimonial": "Reliable partner for our bulk textile shipments across India and internationally.",
+      "partnership_since": "2019",
+      "volume": "2,000+ monthly shipments"
+    }
+  ]
+}

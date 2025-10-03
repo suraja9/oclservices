@@ -1,0 +1,24 @@
+{
+  "zones": {
+    "local": { "name": "Local (Same City)", "baseRate": 50, "fuelSurcharge": 0.12 },
+    "regional": { "name": "Regional (Same State)", "baseRate": 75, "fuelSurcharge": 0.15 },
+    "national": { "name": "National", "baseRate": 120, "fuelSurcharge": 0.18 },
+    "remote": { "name": "Remote Areas", "baseRate": 180, "fuelSurcharge": 0.22 }
+  },
+  "weightSlabs": [
+    { "min": 0, "max": 0.5, "multiplier": 1.0 },
+    { "min": 0.5, "max": 1.0, "multiplier": 1.5 },
+    { "min": 1.0, "max": 2.0, "multiplier": 2.0 },
+    { "min": 2.0, "max": 5.0, "multiplier": 3.5 },
+    { "min": 5.0, "max": 10.0, "multiplier": 6.0 },
+    { "min": 10.0, "max": 25.0, "multiplier": 12.0 },
+    { "min": 25.0, "max": 999, "multiplier": 25.0 }
+  ],
+  "serviceTypes": {
+    "standard": { "name": "Standard", "multiplier": 1.0, "deliveryDays": "3-5" },
+    "express": { "name": "Express", "multiplier": 1.5, "deliveryDays": "1-2" },
+    "priority": { "name": "Priority", "multiplier": 2.0, "deliveryDays": "Same Day" }
+  },
+  "gstRate": 0.18,
+  "fuelSurchargeBase": 0.15
+}

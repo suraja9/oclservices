@@ -1,70 +1,165 @@
-# Getting Started with Create React App
+# OCL SERVICES - Modern Courier & Logistics Landing Page
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A beautiful, responsive landing page for OCL SERVICES courier services built with React, TypeScript, Tailwind CSS, and shadcn/ui components.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+✨ **Modern Design System**
+- Red border theme with light pastel backgrounds
+- Smooth animations and hover effects
+- Fully responsive design
+- Dark/light mode support
 
-### `npm start`
+🎠 **Hero Carousel**
+- Full-screen image carousel with parallax effects
+- Auto-play functionality with manual controls
+- Smooth slide transitions
+- Call-to-action buttons
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+🧭 **Navigation**
+- Sticky transparent navbar
+- Animated dropdown menus
+- Mobile-friendly hamburger menu
+- Smooth scroll to sections
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+📦 **Core Features**
+- Track & Trace functionality
+- Location finder
+- Schedule pickup
+- Real-time package tracking demo
 
-### `npm test`
+📱 **Interactive Elements**
+- App download modal
+- Newsletter signup
+- Social media integration
+- Contact forms
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tech Stack
 
-### `npm run build`
+- **Frontend**: React 18 + TypeScript
+- **Styling**: Tailwind CSS + CSS Custom Properties
+- **Components**: shadcn/ui
+- **Icons**: Lucide React
+- **Build Tool**: Vite
+- **Animations**: CSS Animations + Framer Motion ready
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Installation
 
-### `npm run eject`
+1. Clone the repository
+```bash
+git clone <your-repo-url>
+cd oclservices-landing
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Install dependencies
+```bash
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Start the development server
+```bash
+npm run dev
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. Open [http://localhost:8080](http://localhost:8080) in your browser
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project Structure
 
-## Learn More
+```
+src/
+├── components/          # Reusable UI components
+│   ├── Navbar.tsx      # Navigation with dropdowns
+│   ├── HeroCarousel.tsx # Hero section with image carousel
+│   ├── FeatureCards.tsx # Service feature cards
+│   ├── TrackingSection.tsx # Package tracking demo
+│   ├── Footer.tsx      # Footer with newsletter & social links
+│   └── ui/             # shadcn/ui components
+├── data/               # JSON data files
+│   ├── nav.json        # Navigation structure
+│   └── hero.json       # Hero carousel content
+├── assets/             # Images and static files
+└── pages/              # Page components
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Design System
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The project uses a comprehensive design system with:
 
-### Code Splitting
+### Colors
+- **Primary**: OCL SERVICES Blue (#0b57d0)
+- **Brand Red**: For borders and accents (#dc2626)
+- **Light Backgrounds**: Soft pastels (cream, mint, peach, soft blue)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Components
+- **Cards**: Red borders with light gradient backgrounds
+- **Buttons**: Primary (gradient blue) and outline variants
+- **Animations**: Fade-in, slide-up, float, and hover effects
 
-### Analyzing the Bundle Size
+### CSS Custom Properties
+All colors and effects are defined in `src/index.css` using CSS custom properties for easy theming.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Customization
 
-### Making a Progressive Web App
+### Adding New Sections
+1. Create component in `src/components/`
+2. Import and add to `src/pages/Index.tsx`
+3. Update navigation in `src/data/nav.json` if needed
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Modifying Colors
+Update CSS custom properties in `src/index.css`:
+```css
+:root {
+  --brand-red: 0 84% 60%;
+  --background-soft: 220 50% 98%;
+  /* ... other colors */
+}
+```
 
-### Advanced Configuration
+### Adding New Hero Slides
+Update `src/data/hero.json` and add corresponding images to `src/assets/`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Integration Notes
 
-### Deployment
+The codebase includes TODO comments for future Supabase integration:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Newsletter signup
+- Contact forms  
+- Package tracking API
+- User authentication
+- Content management
 
-### `npm run build` fails to minify
+## Browser Support
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Chrome/Edge 88+
+- Firefox 85+
+- Safari 14+
+- Mobile browsers (iOS Safari, Chrome Mobile)
+
+## Performance
+
+- Optimized images with lazy loading
+- Tree-shaken icon imports
+- CSS-in-JS avoided for better performance
+- Minimal JavaScript bundle
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+Built with ❤️ using Lovable.dev

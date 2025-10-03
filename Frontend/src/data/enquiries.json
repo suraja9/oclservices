@@ -1,0 +1,26 @@
+{
+  "enquiries": [
+    {
+      "id": "ENQ-001",
+      "type": "Franchisee",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone": "+91 9876543210",
+      "city": "Mumbai",
+      "investment": "5-10 Lakhs",
+      "date": "2024-03-15",
+      "status": "Pending"
+    },
+    {
+      "id": "ENQ-002",
+      "type": "Agent",
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "phone": "+91 8765432109",
+      "city": "Delhi",
+      "investment": "2-5 Lakhs",
+      "date": "2024-03-20",
+      "status": "Contacted"
+    }
+  ]
+}

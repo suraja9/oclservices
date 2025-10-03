@@ -1,0 +1,70 @@
+{
+  "company_details": {
+    "legal_name": "OCL SERVICES Logistics Private Limited",
+    "gstin": "27AABCD1234E1Z5",
+    "pan": "AABCD1234E",
+    "cin": "U63030MH2019PTC324567",
+    "registration_date": "2019-04-15",
+    "constitution": "Private Limited Company",
+    "taxpayer_type": "Regular",
+    "status": "Active"
+  },
+  "addresses": {
+    "principal": {
+      "address": "OCL SERVICES House, Plot No. 123, Industrial Estate, Andheri East, Mumbai - 400099, Maharashtra, India",
+      "state": "Maharashtra",
+      "state_code": "27"
+    },
+    "additional": [
+      {
+        "address": "Warehouse Complex, Survey No. 45, Bhiwandi, Thane - 421302, Maharashtra, India",
+        "state": "Maharashtra",
+        "state_code": "27",
+        "type": "Warehouse"
+      }
+    ]
+  },
+  "compliance": {
+    "filing_frequency": "Monthly",
+    "last_return_filed": "GSTR-3B for March 2024",
+    "filing_status": "Regular Filer",
+    "compliance_rating": "A+",
+    "penalties": "Nil"
+  },
+  "tax_structure": {
+    "service_categories": [
+      {
+        "service": "Goods Transportation by Road",
+        "hsn_sac": "996511",
+        "gst_rate": "5%",
+        "description": "Door-to-door courier and logistics services"
+      },
+      {
+        "service": "Express Delivery Services",
+        "hsn_sac": "996519",
+        "gst_rate": "18%",
+        "description": "Same-day and express delivery services"
+      },
+      {
+        "service": "Warehousing Services",
+        "hsn_sac": "996799",
+        "gst_rate": "18%",
+        "description": "Storage and inventory management"
+      }
+    ]
+  },
+  "certificates": [
+    {
+      "name": "GST Registration Certificate",
+      "issue_date": "2019-04-15",
+      "validity": "Perpetual",
+      "download_url": "#"
+    },
+    {
+      "name": "Udyog Aadhaar",
+      "number": "UDYAM-MH-27-1234567",
+      "issue_date": "2020-07-01",
+      "download_url": "#"
+    }
+  ]
+}

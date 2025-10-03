@@ -1,0 +1,46 @@
+{
+  "milestones": [
+    {
+      "year": "2019",
+      "title": "Founded DaakBox",
+      "description": "Started as a small courier service with a vision to revolutionize logistics in India.",
+      "achievements": ["First delivery center in Mumbai", "10+ local partnerships"],
+      "image": "/api/placeholder/400/300"
+    },
+    {
+      "year": "2020",
+      "title": "Digital Transformation",
+      "description": "Launched our digital platform and mobile app for seamless tracking and booking.",
+      "achievements": ["Mobile app launch", "Online booking system", "Real-time tracking"],
+      "image": "/api/placeholder/400/300"
+    },
+    {
+      "year": "2021",
+      "title": "Pan-India Expansion",
+      "description": "Expanded operations to 15+ cities across India with 50+ delivery centers.",
+      "achievements": ["15 cities coverage", "50+ centers", "1000+ daily deliveries"],
+      "image": "/api/placeholder/400/300"
+    },
+    {
+      "year": "2022",
+      "title": "Technology Innovation",
+      "description": "Introduced AI-powered route optimization and WhatsApp integration for customer convenience.",
+      "achievements": ["AI route optimization", "WhatsApp integration", "Same-day delivery"],
+      "image": "/api/placeholder/400/300"
+    },
+    {
+      "year": "2023",
+      "title": "Sustainable Logistics",
+      "description": "Launched eco-friendly delivery options and electric vehicle fleet for sustainable operations.",
+      "achievements": ["Electric vehicle fleet", "Carbon-neutral deliveries", "Green packaging"],
+      "image": "/api/placeholder/400/300"
+    },
+    {
+      "year": "2024",
+      "title": "Global Reach",
+      "description": "Expanded internationally with partnerships across 10+ countries for seamless global delivery.",
+      "achievements": ["International expansion", "10+ country partnerships", "Global tracking"],
+      "image": "/api/placeholder/400/300"
+    }
+  ]
+}

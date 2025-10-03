@@ -4,9 +4,14 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import pincodeRoutes from "./routes/pincode.js";
+import adminRoutes from "./routes/admin.js";
+import officeRoutes from "./routes/office.js";
+import uploadRoutes from "./routes/upload.js";
 import FormData from "./models/FormData.js";
 import PinCodeArea from "./models/PinCodeArea.js";
 import CorporateData from "./models/CorporateData.js";
+import Admin from "./models/Admin.js";
+import OfficeUser from "./models/OfficeUser.js";
 
 dotenv.config();
 const app = express();
@@ -24,6 +29,9 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/api/pincode", pincodeRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/office", officeRoutes);
+app.use("/api/upload", uploadRoutes);
 
 // FORM DATA ROUTES
 
@@ -34,9 +42,9 @@ app.post("/api/form", async (req, res) => {
     
     const { formType, ...formData } = req.body;
     
-    if (!formType || !['sender', 'receiver'].includes(formType)) {
+    if (!formType || !['sender', 'receiver', 'full'].includes(formType)) {
       return res.status(400).json({ 
-        error: 'formType must be either "sender" or "receiver"' 
+        error: 'formType must be either "sender", "receiver" or "full"' 
       });
     }
     
@@ -44,16 +52,40 @@ app.post("/api/form", async (req, res) => {
     let requiredFields;
     if (formType === 'sender') {
       requiredFields = ['name', 'email', 'phone', 'pincode', 'state', 'city', 'district', 'area', 'addressLine1'];
-    } else {
+      const missingFields = requiredFields.filter(field => !formData[field] || formData[field].toString().trim() === '');
+      if (missingFields.length > 0) {
+        return res.status(400).json({ 
+          error: `Missing required fields: ${missingFields.join(', ')}` 
+        });
+      }
+    } else if (formType === 'receiver') {
       requiredFields = ['name', 'email', 'phone', 'pincode', 'state', 'city', 'district', 'area', 'addressLine1'];
-    }
-    
-    const missingFields = requiredFields.filter(field => !formData[field] || formData[field].toString().trim() === '');
-    
-    if (missingFields.length > 0) {
-      return res.status(400).json({ 
-        error: `Missing required fields: ${missingFields.join(', ')}` 
-      });
+      const missingFields = requiredFields.filter(field => !formData[field] || formData[field].toString().trim() === '');
+      if (missingFields.length > 0) {
+        return res.status(400).json({ 
+          error: `Missing required fields: ${missingFields.join(', ')}` 
+        });
+      }
+    } else if (formType === 'full') {
+      const { originData, destinationData, shipmentData, uploadData, paymentData } = req.body;
+      if (!originData || !destinationData || !shipmentData || !uploadData || !paymentData) {
+        return res.status(400).json({ error: 'All of originData, destinationData, shipmentData, uploadData, paymentData are required' });
+      }
+      // Basic validations
+      const checkReq = (obj, fields) => fields.filter(f => !obj?.[f] || String(obj[f]).trim() === '');
+      const originMissing = checkReq(originData, ['name','mobileNumber','pincode','city','state']);
+      const destinationMissing = checkReq(destinationData, ['name','mobileNumber','pincode','city','state']);
+      const paymentMissing = checkReq(paymentData, ['mode']);
+      const totalPackagesNum = Number(uploadData?.totalPackages);
+      const packagesOk = Number.isFinite(totalPackagesNum) && totalPackagesNum > 0;
+      const missing = [];
+      if (originMissing.length) missing.push(`originData: ${originMissing.join(', ')}`);
+      if (destinationMissing.length) missing.push(`destinationData: ${destinationMissing.join(', ')}`);
+      if (paymentMissing.length) missing.push(`paymentData: ${paymentMissing.join(', ')}`);
+      if (!packagesOk) missing.push('uploadData: totalPackages');
+      if (missing.length) {
+        return res.status(400).json({ error: `Missing required fields -> ${missing.join(' | ')}` });
+      }
     }
 
     let existingForm = null;
@@ -81,8 +113,38 @@ app.post("/api/form", async (req, res) => {
           error: 'No sender form found. Please submit sender form first.' 
         });
       }
+    } else if (formType === 'full') {
+      // Try to find existing doc by origin email (if provided)
+      const originEmail = req.body?.originData?.email?.toLowerCase();
+      if (originEmail) {
+        existingForm = await FormData.findOne({ senderEmail: originEmail });
+      }
     }
     
+    // Helper: normalize possibly mixed inputs to array of strings
+    const normalizeToStringArray = (input) => {
+      if (Array.isArray(input)) {
+        return input
+          .map((item) => {
+            if (typeof item === 'string') return item;
+            if (item && typeof item === 'object') {
+              return item.url || item.path || item.dataURL || item.data || item.name || '';
+            }
+            return '';
+          })
+          .filter((s) => typeof s === 'string' && s.trim() !== '');
+      }
+      if (typeof input === 'string') {
+        try {
+          const parsed = JSON.parse(input);
+          return normalizeToStringArray(parsed);
+        } catch {
+          return input.trim() ? [input] : [];
+        }
+      }
+      return [];
+    };
+
     // Prepare the update data with proper field prefixes
     const updateData = {};
     if (formType === 'sender') {
@@ -97,7 +159,7 @@ app.post("/api/form", async (req, res) => {
       updateData.senderAddressLine1 = formData.addressLine1;
       updateData.senderAddressLine2 = formData.addressLine2 || '';
       updateData.senderLandmark = formData.landmark || '';
-    } else {
+    } else if (formType === 'receiver') {
       updateData.receiverName = formData.name;
       updateData.receiverEmail = formData.email.toLowerCase();
       updateData.receiverPhone = formData.phone;
@@ -109,6 +171,51 @@ app.post("/api/form", async (req, res) => {
       updateData.receiverAddressLine1 = formData.addressLine1;
       updateData.receiverAddressLine2 = formData.addressLine2 || '';
       updateData.receiverLandmark = formData.landmark || '';
+    } else if (formType === 'full') {
+      // Merge all steps into one document
+      const { originData, destinationData, shipmentData, uploadData, paymentData } = req.body;
+      // sanitize uploadData
+      const sanitizedUploadData = {
+        ...uploadData,
+        totalPackages: Number(uploadData?.totalPackages),
+        packageImages: normalizeToStringArray(uploadData?.packageImages),
+        invoiceImages: normalizeToStringArray(uploadData?.invoiceImages),
+        invoiceValue: uploadData?.invoiceValue !== undefined ? Number(uploadData.invoiceValue) : undefined,
+        acceptTerms: Boolean(uploadData?.acceptTerms)
+      };
+      updateData.originData = originData;
+      updateData.destinationData = destinationData;
+      updateData.shipmentData = shipmentData;
+      updateData.uploadData = sanitizedUploadData;
+      updateData.paymentData = paymentData;
+      // Also backfill flat fields for backward compatibility/queries
+      if (originData) {
+        updateData.senderName = originData.name;
+        updateData.senderEmail = originData.email?.toLowerCase();
+        updateData.senderPhone = originData.mobileNumber;
+        updateData.senderPincode = originData.pincode;
+        updateData.senderState = originData.state;
+        updateData.senderCity = originData.city;
+        updateData.senderDistrict = originData.district;
+        updateData.senderArea = originData.area;
+        updateData.senderAddressLine1 = originData.flatBuilding;
+        updateData.senderAddressLine2 = originData.locality || '';
+        updateData.senderLandmark = originData.landmark || '';
+      }
+      if (destinationData) {
+        updateData.receiverName = destinationData.name;
+        updateData.receiverEmail = destinationData.email?.toLowerCase();
+        updateData.receiverPhone = destinationData.mobileNumber;
+        updateData.receiverPincode = destinationData.pincode;
+        updateData.receiverState = destinationData.state;
+        updateData.receiverCity = destinationData.city;
+        updateData.receiverDistrict = destinationData.district;
+        updateData.receiverArea = destinationData.area;
+        updateData.receiverAddressLine1 = destinationData.flatBuilding;
+        updateData.receiverAddressLine2 = destinationData.locality || '';
+        updateData.receiverLandmark = destinationData.landmark || '';
+      }
+      updateData.formCompleted = true;
     }
 
     let savedForm;
@@ -1016,6 +1123,15 @@ const startServer = async () => {
     // Check corporate collection
     const corporateCount = await CorporateData.countDocuments();
     console.log(`🏢 CorporateData collection has ${corporateCount} records`);
+    
+    // Initialize default admin if none exists
+    await Admin.createDefaultAdmin();
+    const adminCount = await Admin.countDocuments();
+    console.log(`👤 Admin collection has ${adminCount} records`);
+    
+    // Check office users collection
+    const officeUserCount = await OfficeUser.countDocuments();
+    console.log(`🏢 OfficeUser collection has ${officeUserCount} records`);
     
     // Start the server
     const PORT = process.env.PORT || 5000;

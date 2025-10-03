@@ -1,0 +1,98 @@
+{
+  "shipments": {
+    "DXB001234": {
+      "awb": "DXB001234",
+      "status": "Delivered",
+      "origin": "Dubai, UAE",
+      "destination": "Mumbai, India",
+      "estimatedDelivery": "2024-01-15T14:30:00Z",
+      "actualDelivery": "2024-01-15T13:45:00Z",
+      "weight": "2.5 kg",
+      "service": "Express International",
+      "timeline": [
+        {
+          "status": "Order Placed",
+          "location": "Dubai, UAE",
+          "timestamp": "2024-01-12T10:00:00Z",
+          "description": "Shipment booked and label generated"
+        },
+        {
+          "status": "Picked Up",
+          "location": "Dubai, UAE",
+          "timestamp": "2024-01-12T15:30:00Z",
+          "description": "Package collected from sender"
+        },
+        {
+          "status": "In Transit",
+          "location": "Dubai Airport",
+          "timestamp": "2024-01-13T08:00:00Z",
+          "description": "Package departed from origin"
+        },
+        {
+          "status": "Customs Clearance",
+          "location": "Mumbai Airport",
+          "timestamp": "2024-01-14T12:00:00Z",
+          "description": "Package cleared customs"
+        },
+        {
+          "status": "Out for Delivery",
+          "location": "Mumbai, India",
+          "timestamp": "2024-01-15T09:00:00Z",
+          "description": "Package out for final delivery"
+        },
+        {
+          "status": "Delivered",
+          "location": "Mumbai, India",
+          "timestamp": "2024-01-15T13:45:00Z",
+          "description": "Package delivered successfully"
+        }
+      ]
+    },
+    "DXB001235": {
+      "awb": "DXB001235",
+      "status": "In Transit",
+      "origin": "Mumbai, India",
+      "destination": "London, UK",
+      "estimatedDelivery": "2024-01-18T16:00:00Z",
+      "weight": "1.2 kg",
+      "service": "Standard International",
+      "timeline": [
+        {
+          "status": "Order Placed",
+          "location": "Mumbai, India",
+          "timestamp": "2024-01-14T09:00:00Z",
+          "description": "Shipment booked and label generated"
+        },
+        {
+          "status": "Picked Up",
+          "location": "Mumbai, India",
+          "timestamp": "2024-01-14T14:00:00Z",
+          "description": "Package collected from sender"
+        },
+        {
+          "status": "In Transit",
+          "location": "Mumbai Airport",
+          "timestamp": "2024-01-15T06:00:00Z",
+          "description": "Package departed from origin"
+        }
+      ]
+    },
+    "DXB001236": {
+      "awb": "DXB001236",
+      "status": "Processing",
+      "origin": "London, UK",
+      "destination": "New York, USA",
+      "estimatedDelivery": "2024-01-20T12:00:00Z",
+      "weight": "3.8 kg",
+      "service": "Express International",
+      "timeline": [
+        {
+          "status": "Order Placed",
+          "location": "London, UK",
+          "timestamp": "2024-01-16T11:00:00Z",
+          "description": "Shipment booked and label generated"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "overview": {
+    "name": "OCL SERVICES Logistics Pvt. Ltd.",
+    "tagline": "Deliver Excellence",
+    "established": "2019",
+    "headquarters": "Mumbai, Maharashtra, India",
+    "employees": "500+",
+    "branches": "75+",
+    "cities": "25+",
+    "description": "OCL SERVICES is India's leading courier and logistics company, committed to providing reliable, efficient, and innovative delivery solutions across the nation and beyond."
+  },
+  "contact": {
+    "address": "OCL SERVICES House, Plot No. 123, Industrial Estate, Andheri East, Mumbai - 400099, Maharashtra, India",
+    "phone": "+91-22-4567-8900",
+    "email": "info@oclservices.com",
+    "website": "www.oclservices.com",
+    "customer_care": "1800-123-OCLS"
+  },
+  "executives": [
+    {
+      "name": "Rajesh Kumar",
+      "position": "Chief Executive Officer",
+      "experience": "15+ years in logistics",
+      "image": "/api/placeholder/300/300",
+      "bio": "Visionary leader with extensive experience in scaling logistics operations across India."
+    },
+    {
+      "name": "Priya Sharma",
+      "position": "Chief Technology Officer",
+      "experience": "12+ years in tech",
+      "image": "/api/placeholder/300/300",
+      "bio": "Technology innovator driving digital transformation in the logistics sector."
+    },
+    {
+      "name": "Amit Patel",
+      "position": "Chief Operations Officer",
+      "experience": "18+ years in operations",
+      "image": "/api/placeholder/300/300",
+      "bio": "Operations expert ensuring seamless delivery experiences across all touchpoints."
+    },
+    {
+      "name": "Sneha Reddy",
+      "position": "Chief Finance Officer",
+      "experience": "10+ years in finance",
+      "image": "/api/placeholder/300/300",
+      "bio": "Financial strategist driving sustainable growth and operational efficiency."
+    }
+  ],
+  "certifications": [
+    "ISO 9001:2015 Quality Management",
+    "ISO 14001:2015 Environmental Management",
+    "OHSAS 18001:2007 Occupational Health & Safety",
+    "AEO (Authorized Economic Operator)",
+    "IATA Certified for Air Cargo"
+  ]
+}
